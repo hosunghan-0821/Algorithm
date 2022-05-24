@@ -5,35 +5,28 @@ public class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-		int K = Integer.parseInt(br.readLine());
+        int K = Integer.parseInt(br.readLine());
         
-        long lo = 1;
-		long hi = K;
+        //찾는 int[k]=x 에서 x 값은 인덱스 k 값보다 작거나 같다.
+        //직접 배열 그려봐라
         
-        while(lo < hi) {
-			
-			long mid = (lo + hi) / 2;	// 임의의 x(mid)를 중간 값으로 잡는다.
-			long count = 0;
-			
-			/*
-			 *  임의의 x에 대해 i번 째 행을 나눔으로써 x보다 작거나 같은 원소의 개수
-			 *  누적 합을 구한다.
-			 *  이 때 각 행의 원소의 개수가 N(열 개수)를 초과하지 않는 선에서 합해주어야 한다.   
-			 */
-			for(int i = 1; i <= N; i++) {
-				count += Math.min(mid / i, N);
-			}
-			
-			// count가 많다는 것은 임의의 x(mid)보다 작은 수가 B[K]보다 많다는 뜻
-			if(K <= count) {
-				hi = mid;
-			}
-			else {
-				lo = mid + 1;
-			}
-		}
-		
-		System.out.println(lo);
+        int lo =1;
+        int hi =K;
         
+        
+        while(lo<hi){
+            int mid = (lo+hi)/2;
+            int count =0;
+            for(int i =1 ; i<=N;i++){
+                count += Math.min(mid/i,N);
+            }
+            if(K<=count){
+                hi=mid;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
+        System.out.println(lo);
     }
 }
