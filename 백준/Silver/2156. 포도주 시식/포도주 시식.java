@@ -7,20 +7,23 @@ public class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N =Integer.parseInt(br.readLine());
-        dp=new Integer[N+1];
-        arr=new Integer[N+1];
+        dp=new Integer[N];
+        arr=new Integer[N];
         
-        for(int i =1 ; i<=N;i++){
+        for(int i =0 ; i<N;i++){
             
             arr[i] = Integer.parseInt(br.readLine());
             
         }
-        dp[0]=0;
-        dp[1]=arr[1];
+        dp[0]=arr[0];
         if(N>1){
-            dp[2]=arr[1]+arr[2];
+              dp[1]=arr[1]+arr[0];
         }
-        System.out.println(recur(N));
+      
+        if(N>2){
+            dp[2]=Math.max( Math.max(arr[1]+0,dp[0])+arr[2] ,dp[1] );
+        }
+        System.out.println(recur(N-1));
         
     }
     static int recur(int N){
