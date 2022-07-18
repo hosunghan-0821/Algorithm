@@ -2,9 +2,11 @@ import java.util.*;
 class Solution {
     public int solution(int n) {
         int answer = 0;
+        //원하는 값에 -1 을 하고 나눈 약수중 1을 제외한 숫자중 제일작은 수를 구하면됨.
         answer =find_divider(n-1);
         return answer;
     }
+    //주어진 값의 약수를 저장하고 1보다 큰 약수중 제일 작은수를 return 하는
     public int find_divider(int n){
         ArrayList<Integer> arr = new ArrayList<>();
         
@@ -13,15 +15,8 @@ class Solution {
                 arr.add(i);
                 arr.add(n/i);
             }
-                
-        
-        }
-        for(int i = 0 ; i<arr.size();i++){
-              System.out.println(arr.get(i));
         }
         Collections.sort(arr);
-      
-        //return 0 ;
         return arr.get(1); 
     }
 }
