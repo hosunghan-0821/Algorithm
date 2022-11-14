@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,6 +28,9 @@ public class Main {
             w = Integer.parseInt(st.nextToken());
             h = Integer.parseInt(st.nextToken());
 
+                 if(w==0 && h==0){
+                break;
+            }
             //graph 초기화
             for (int i = 0; i < h; i++) {
                 st = new StringTokenizer(br.readLine(), " ");
@@ -48,7 +50,7 @@ public class Main {
                     }
                 }
             }
-            if(w!=0 && h!=0) System.out.println(ans);
+            System.out.println(ans);
 
         } while (w != 0 && h != 0);
 
