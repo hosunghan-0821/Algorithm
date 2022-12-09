@@ -1,39 +1,50 @@
 import java.util.*;
 
 class Solution {
+    
+    public int[] dx = {1, -1, 0, 0};
+    public int[] dy = {0, 0, 1, -1};
+    public int r, c;
+    
     public int solution(int[][] maps) {
-        int answer = 0;
 
-        int[] dy={0,0,-1,1};
-        int[] dx={1,-1,0,0};
-        int col = maps[0].length-1, row = maps.length-1;
+        r = maps.length;
+        c = maps[0].length;
+        boolean[][] visited = new boolean[r][c];
 
-        int[][] visited = new int[maps.length][maps[0].length];
-        visited[0][0]=1;
-        Deque<int[]> queue = new LinkedList<>();
+        return bfs(maps,visited);
+    }
+        public int bfs(int[][] maps, boolean[][] visited) {
+        Queue<int[]> queue = new LinkedList<>();
+        visited[0][0] = true;
         queue.add(new int[]{0,0,1});
+        int answer = -1;
 
-        while(queue.size()>0){
-            int[] cur=queue.removeFirst();
-            if(cur[0]==row&&cur[1]==col){
-                return visited[row][col];
+        while (!queue.isEmpty()) {
+            int[] point = queue.poll();
+            if(point[0]==r-1 && point[1]==c-1){
+                answer = point[2];
+                break;
             }
 
-            int x=cur[1];
-            int y=cur[0];
-            maps[y][x]=0;
+            for(int i = 0 ; i < 4 ; i ++){
+                int nr = point[0]+dx[i];
+                int nc = point[1]+dy[i];
 
-            for(int i=0;i<4;i++){
-                int nx=x+dx[i];
-                int ny=y+dy[i];
-                if(ny<0 || nx<0 || nx>col || ny> row)continue;
-                if(maps[ny][nx]==1&&visited[ny][nx]==0){
-                    queue.addLast(new int[]{ny,nx});
-                    visited[ny][nx]=visited[y][x]+1;       
+                if(nr<0 || nr >= r || nc<0 ||nc>=c ){
+                    continue;
+                }
+                if(visited[nr][nc]){
+                    continue;
+                }
+                if(maps[nr][nc]==1){
+                    queue.add(new int[]{nr,nc,point[2]+1});
+                    visited[nr][nc]=true;
                 }
             }
-        }
 
-        return -1;
+
+        }
+        return answer;
     }
 }
