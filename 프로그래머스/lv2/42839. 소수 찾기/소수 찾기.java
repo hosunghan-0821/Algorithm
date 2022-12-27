@@ -7,8 +7,9 @@ class Solution {
     public int solution(String numbers) {
         
         int answer = 0;
-        dfs(numbers, new boolean[numbers.length()], 0, new StringBuilder());
-        System.out.println(data.size());
+        dfs(numbers,new boolean[numbers.length()],new StringBuilder());
+     
+        
         for (Integer num : data) {
             if(num<2) continue;
             if (isPrimeNumber(num)) {
@@ -19,6 +20,20 @@ class Solution {
         
         return answer;
     }
+    
+    public void dfs(String numbers, boolean[] visited ,StringBuilder s){
+        
+        for(int i = 0 ; i <numbers.length();i++){
+            if(visited[i])continue;
+            s.append(numbers.charAt(i));
+            visited[i]=true;
+            data.add(Integer.parseInt(s.toString()));
+            dfs(numbers,visited,s);
+            s.deleteCharAt(s.length()-1);
+            visited[i]=false;
+        }
+       
+    }
 
     public boolean isPrimeNumber(int num) {
 
@@ -28,21 +43,6 @@ class Solution {
             }
         }
         return true;
-    }
-      public void dfs(String numbers, boolean[] visited, int depth, StringBuilder s) {
-
-        for (int i = 0; i < visited.length; i++) {
-            if (visited[i]) continue;
-            visited[i] = true;
-            s.append(numbers.charAt(i));
-
-            data.add(Integer.parseInt(s.toString()));
-            dfs(numbers, visited, depth + 1, s);
-
-            s.deleteCharAt(s.length() - 1);
-            visited[i] = false;
-        }
-
     }
 
 
