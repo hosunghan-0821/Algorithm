@@ -21,9 +21,10 @@ class Solution {
         
             s.append(String.valueOf(list.get(i)));
         }
+        answer = s.toString();
         if(s.toString().charAt(0)=='0'){
             return "0";
         }
-        return s.toString();
+        return answer;
     }
 }
