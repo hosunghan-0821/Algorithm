@@ -1,24 +1,33 @@
-n, m = map(int,input().split())
-time = list(map(int,input().split()))
+import sys
 
-start = max(time)
-end = sum(time)
+input = sys.stdin.readline
 
-while start <= end:
-    mid = (start + end) // 2 
 
-    total = 0
-    count = 1
-    for t in time:
-        if total + t > mid:
-            count += 1
-            total = 0
-        total += t 
+def binary_search(data, start, end):
 
-    if count <= m:
-        ans = mid
-        end = mid - 1
-    else:
-        start = mid + 1
-    
-print(ans)
+    while start <= end:
+        mid = (start + end) // 2
+        sum = 0
+        cnt = 0
+        for i in range(len(data)):
+            if sum + data[i] > mid:
+                cnt += 1
+                sum = 0
+            sum += data[i]
+
+        if cnt > M - 1:
+            start = mid + 1
+        else:
+            end = mid - 1
+            result = mid
+
+    print(result)
+
+
+N, M = map(int, input().split())
+data = list(map(int, input().split()))
+
+low = max(data)
+high = sum(data)
+
+binary_search(data, low, high)
