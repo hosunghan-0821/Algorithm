@@ -1,27 +1,33 @@
 import sys
 import heapq
-input=sys.stdin.readline
+input = sys.stdin.readline
 
-INF=10**7
-N,M=map(int,input().split())
-K=int(input())
-adj=[[] for _ in range(N+1)]
-for _ in range(M):
-    u,v,w=map(int,input().split())
-    adj[u].append((v,w))
-d=[INF for _ in range(N+1)]
+INF = 10**7
+N, M = map(int, input().split())
+K = int(input())
 
-d[K]=0
-heap=[(0,K)]
-while heap:
-    cost_v,v=heapq.heappop(heap)
-    for w,cost_vw in adj[v]:
+graph = [[] for _ in range(N + 1)]
+distance = [INF for _ in range(N + 1)]
+
+for i in range(M):
+    # 그래프 초기화
+    first, end, cost = map(int, input().split())
+    graph[first].append((end, cost))
+
+distance[K] = 0
+q = [(0, K)]
+
+while q:
+    cost_v, v = heapq.heappop(q)
+    for w, cost_vw in graph[v]:
         dist=cost_v+cost_vw
-        if dist<d[w]:
-            heapq.heappush(heap,(dist,w))
-            d[w]=dist
-for v in range(1,N+1):
-    if d[v]==INF:
-        print('INF')
+        if dist < distance[w]:
+            heapq.heappush(q, (dist, w))
+            distance[w] = dist
+            
+
+for i in range(1, N + 1):
+    if distance[i] == INF:
+        print("INF")
     else:
-        print(d[v])
+        print(distance[i])
