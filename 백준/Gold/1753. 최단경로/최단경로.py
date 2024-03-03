@@ -2,37 +2,37 @@ import sys
 import heapq
 
 input = sys.stdin.readline
+n, m = map(int, input().split())
+start_node = int(input())
 INF = 10 ** 7
-N, M = map(int, input().split())
-K = int(input())
+graph = [[] for _ in range(n + 1)]
+distance = [INF] * (n + 1)
 
-graph = [[] for _ in range(N + 1)]
-
-for i in range(M):
-    # 그래프 초기화
-    first, end, cost = map(int, input().split())
-    graph[first].append((end, cost))
-
-distance = [INF for _ in range(N + 1)]
-
-distance[K] = 0
+for i in range(m):
+    start, end, cost = map(int, input().split())
+    graph[start].append((end, cost))
 
 q = []
-heapq.heappush(q, (0, K))
+distance[start_node] = 0
+heapq.heappush(q, (0, start_node))
 
 while q:
-    cost, di_start = heapq.heappop(q)
-    if distance[di_start] < cost :
+    dist, node = heapq.heappop(q)
+
+    if distance[node] < dist:
         continue
-    for related_node, related_node_value in graph[di_start]:
-        added_cost = cost + related_node_value
 
-        if added_cost < distance[related_node]:
-            heapq.heappush(q, (added_cost, related_node))
-            distance[related_node] = added_cost
+    for end, cost in graph[node]:
+        new_cost = cost + dist
 
-for i in range(1, N + 1):
+        if new_cost < distance[end]:
+            heapq.heappush(q, (new_cost, end))
+            distance[end] = new_cost
+            
+
+for i in range(1, n + 1):
     if distance[i] == INF:
         print("INF")
     else:
         print(distance[i])
+
