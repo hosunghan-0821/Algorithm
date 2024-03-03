@@ -7,7 +7,7 @@ def solution(r1, r2):
         if i > r1:
             minH = 0
         else :
-            minH = math.ceil(math.sqrt(r1**2 - i**2))
+            minH =math.ceil(math.sqrt(r1**2 - i**2))
         
         maxH = math.floor(math.sqrt(r2**2 - i **2))
         
