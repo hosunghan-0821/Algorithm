@@ -1,66 +1,71 @@
-import copy
-import sys
+from collections import deque
 
-sys.setrecursionlimit(10000000)
+dx = [1,-1,0,0]
+dy = [0,0,1,-1]
+total_row = 0
+total_column = 0
 
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
+def bfs(land,row, column, block_number):
+    global dx,dy
+    global total_row, total_column
     
-max_value = 0
-frag_info = {}
-frag_index = 2
-    
-def DFSRecursive(land, row, column, total_row, total_column):
-    
-    global dx, dy
-    global max_value
-    global frag_index
-    
-    if row < 0 or row >= total_row or column < 0 or column >= total_column:
-        return False
+    queue = deque()
     
     if land[row][column] != 1:
-        return False
+        return -1
     
-    land[row][column] = frag_index
-    max_value += 1
+    count = 1
+    land[row][column] = block_number
     
-    for i in range(4):
-        new_row = row + dy[i]
-        new_column = column + dx[i]
-        DFSRecursive(land, new_row, new_column, total_row, total_column)
+    queue.append((row, column))
+    while queue:
+        
+        now_row, now_column= queue.popleft()
+        
+        for i in range(4):
+            
+            check_row = now_row + dy[i]
+            check_column = now_column + dx[i]
+            
+            if check_row < 0 or check_row >=total_row or check_column < 0 or check_column >= total_column:
+                continue
+            
+            if land[check_row][check_column] == 1:
+                land[check_row][check_column] = block_number
+                count += 1
+                queue.append((check_row, check_column))
     
+    return count
     
+
 def solution(land):
-    global max_value
-    global frag_index,frag_info
+    global total_row, total_column
     answer = 0
+    total_row = len(land)
+    total_column = len(land[0])
+    data = dict()
     
-    row = len(land)
-    column = len(land[0])
+    block_number = 2
+    for i in range(total_row):
+        for j in range(total_column):
+            result = bfs(land, i, j, block_number)
+            if result != -1:
+                data[block_number] = result
+                block_number += 1
+                
+    max_value = 0
+
+    for i in range(total_column):
+        blocks= set()
+        value = 0
+        for j in range(total_row):
+            blocks.add(land[j][i])
+        
+        for block in blocks:
+            if block != 0:
+                value += data.get(block)
+        
+        if value > max_value:
+            max_value = value
     
-    for j in range(column):
-        
-        for i in range(row):
-            max_value = 0
-            DFSRecursive(land, i, j, row, column)
-            
-            if max_value != 0:
-                frag_info[frag_index] = max_value
-                frag_index += 1
-            
-    
-    for j in range(column):
-        frag_set = set()
-        sum = 0
-        for i in range(row):
-            if land[i][j] != 0:
-                frag_set.add(land[i][j])
-        
-        for data in frag_set:
-            sum += frag_info[data]
-        
-        if  answer < sum:
-            answer = sum
-            
-    return answer
+    return max_value
