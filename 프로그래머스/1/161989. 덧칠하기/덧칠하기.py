@@ -1,12 +1,12 @@
 def solution(n, m, section):
+    
     answer = 0
-    
-    cnt = 1
-    standard = section[0]
-    for i in section:
-        
-        if i > standard + m - 1:
-            cnt += 1
-            standard = i
-    
-    return cnt
+    start = section[0]
+    end = start + m - 1
+    count = 1
+    for i in range(1, len(section)):
+        if section[i] > end:
+            count += 1
+            end = section[i] + m -1
+            
+    return count
