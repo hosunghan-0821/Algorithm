@@ -1,14 +1,14 @@
-import copy
 def solution(targets):
-    answer = 0
+    answer = 1
     targets.sort(key = lambda x: x[1])
     
-    end = 0
-    
-    for s, e in targets:
+    start = targets[0][0]
+    end = targets[0][1]
+    for target in targets:
         
-        if s >= end:
-            answer += 1
-            end = e
+        start = target[0]
+        if start >= end:
+            answer +=1
+            end = target[1]
             
     return answer
