@@ -1,32 +1,29 @@
 import sys
+sys.setrecursionlimit(100000)
 
-sys.setrecursionlimit(10000)
-def DFSRecursive(graph, i, visited):
-    if visited[i]:
+def dfsRecursive(j,computers,visited):
+    
+    if visited[j] is True:
         return False
     
-    visited[i] = True
+    visited[j] = True
     
-    for linked_node in graph[i]:
-        DFSRecursive(graph, linked_node, visited)
-    
+    for index, node in enumerate(computers[j]):
+
+        if node == 1:
+            dfsRecursive(index, computers, visited)
     return True
-        
     
 
 def solution(n, computers):
+    
     answer = 0
-    visited = [False] * n
-    graph = [[] for _ in range(n)]
+    visited = [False] * n 
+    
     for i in range(n):
         for j in range(n):
-            if i == j :
-                continue
-            if computers[i][j] == 1:
-                graph[i].append(j)
-             
-    for i in range(n):
-        if DFSRecursive(graph, i, visited):
-            answer += 1
-
+            if (dfsRecursive(j,computers,visited)):
+                answer += 1
+                
+            
     return answer
