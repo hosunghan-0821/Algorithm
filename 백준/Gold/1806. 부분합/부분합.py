@@ -12,7 +12,7 @@ length = len(data)
 sum_data = data[0]
 answer = sys.maxsize
 
-while right < length and left <= right:
+while right < length:
     
     if sum_data == S:
 
