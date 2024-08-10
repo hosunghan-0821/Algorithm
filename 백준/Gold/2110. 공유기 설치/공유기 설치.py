@@ -3,36 +3,35 @@ import sys
 input = sys.stdin.readline
 
 N, C = map(int, input().split())
+data = []
 
-data = [int(input()) for i in range(N)]
+for i in range(N):
+    data.append(int(input()))
+
 data.sort()
+low = 1
+high = data[N - 1] - data[0]
+answer = data[N - 1] - data[0]
+# lower bound로 풀어볼거야
+while low <= high:
+    mid = (low + high) // 2
 
-start = 1
-end = data[N - 1] - data[0]
-
-ans = 0
-# for문을 활용한 2진 탐색
-while start <= end:
-    mid = (start + end) // 2
-
+    # 가장 처음 집은 설치한다고 가정하고 스타트
     cnt = 1
-    sum = 0
-    current = data[0]
-
-    for i in range(N - 1):
-        if data[i + 1] >= current + mid:
+    start_x = data[0]
+    for i in range(1, N):
+        if data[i] - start_x >= mid:
             cnt += 1
-            current = data[i + 1]
+            start_x = data[i]
 
+    #print(f"mid = {mid}  cnt = {cnt}")
     if cnt >= C:
-        start = mid + 1
-        ans = mid
+        low = mid + 1
 
     else:
-        end = mid - 1
+        high = mid - 1
 
+print(high)
 
-
-print(ans)
 
 
